@@ -4,7 +4,9 @@ module rom #(
 )(
     input logic                      clk,
     input logic [ADDRESS_WIDTH-1:0] addr,
-    output logic [DATA_WIDTH-1:0]   dout
+    input logic [ADDRESS_WIDTH-1:0] addr2,
+    output logic [DATA_WIDTH-1:0]   dout,
+    output logic [DATA_WIDTH-1:0]   dout2
 );
 
 logic [DATA_WIDTH-1:0] rom_array [2**ADDRESS_WIDTH-1:0];
@@ -14,7 +16,8 @@ initial begin
     $readmemh("sinerom.mem", rom_array);
 end;
 
-always_ff @(posedge clk) //synchronous output
+always_ff @(posedge clk) begin //synchronous output
     dout <= rom_array [addr];
-    
+    dout2 <= rom_array [addr2];
+    end
 endmodule
